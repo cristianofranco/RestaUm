@@ -2,7 +2,7 @@
 
 #include <GL/glut.h>
 
-GLfloat angle, fAspect, inclinacao = 60; //INCLINAÇÃO: ÂNGULO DE ROTAÇÃO DO TABULEIRO
+GLfloat angle, fAspect, inclinacao = 0; //INCLINAÇÃO: ÂNGULO DE ROTAÇÃO DO TABULEIRO
                                          //VALORES TESTADOS: {0~90}
 
 //Representa a base do tabuleiro
@@ -31,27 +31,8 @@ void Tabuleiro() {
     //ESFERA 1 - COMEÇANDO DO TOPO-ESQUERDA
     glPushMatrix();
         glRotated(inclinacao - 90, 1, 0, 0);
-
-        //CORRECAO DE FORMA TEMPORÁRIA
-
-        if (inclinacao <= 0)
-            glTranslated(-18, 90, 0);
-        else if (inclinacao > 0 && inclinacao <= 30)
-            glTranslated(-18, 70, 0);
-        else if (inclinacao > 30 && inclinacao <= 40)
-            glTranslated(-18, 65, 0);
-        else if (inclinacao > 40 && inclinacao <= 50)
-            glTranslated(-18, 60, 0);
-        else if (inclinacao > 50 && inclinacao <= 60)
-            glTranslated(-18, 57, 0);
-        else if (inclinacao > 60 && inclinacao <= 70)
-            glTranslated(-18, 55, 0);
-        else if (inclinacao > 70 && inclinacao <= 80)
-            glTranslated(-18, 52, 0);
-        else
-            glTranslated(-18, 50, 0);
-
         glScaled(0.45, 0.45, 0.45);
+        glTranslated(-45, 125, 30);
         Esfera();
 
     //ESFERA 2
@@ -191,6 +172,7 @@ void Tabuleiro() {
 void Desenha(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     glColor3f(1.0f, 0.0f, 0.0f);
     Tabuleiro();
@@ -202,6 +184,7 @@ void Desenha(void)
 void Inicializa (void)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
     angle=45;
 }
 
@@ -248,6 +231,27 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
     EspecificaParametrosVisualizacao();
 }
 
+void GerenciaTeclado(unsigned char key, int x, int y)
+{
+    if (key == 'w') {
+        if (inclinacao == 90) {
+            inclinacao = 90;
+        } else {
+            inclinacao+= 5;
+        }
+    }
+    if (key == 's') {
+        if (inclinacao == 0) {
+            inclinacao = 0;
+        } else {
+            inclinacao-= 5;
+        }
+    }
+
+    EspecificaParametrosVisualizacao();
+    glutPostRedisplay();
+}
+
 // Função callback chamada para gerenciar eventos do mouse
 void GerenciaMouse(int button, int state, int x, int y)
 {
@@ -269,6 +273,7 @@ int main(void)
     glutDisplayFunc(Desenha);
     glutReshapeFunc(AlteraTamanhoJanela);
     glutMouseFunc(GerenciaMouse);
+    glutKeyboardFunc(GerenciaTeclado);
     Inicializa();
     glutMainLoop();
 
