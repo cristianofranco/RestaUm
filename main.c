@@ -2,8 +2,14 @@
 
 #include <GL/glut.h>
 
-GLfloat angle, fAspect, inclinacao = 0; //INCLINAÇÃO: ÂNGULO DE ROTAÇÃO DO TABULEIRO
-                                         //VALORES TESTADOS: {0~90}
+GLfloat angle, fAspect, inclinacao = 0;
+//Definição de cores RGBA para usar com MaterialFV
+GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
+GLfloat DarkRed[] = {0.2, 0.0, 0.0, 1.0};
+GLfloat Red[] = {0.4, 0.0, 0.0, 1.0};
+GLfloat White[] = {1, 1, 1, 1.0};
+GLfloat LightGray[] = {0.85, 0.85, 0.85};
+GLfloat Gray[] = {0.45, 0.45, 0.45};
 
 //Representa a base do tabuleiro
 void Base(){
@@ -13,26 +19,22 @@ void Base(){
 //Representa uma esfera individual
 void Esfera(){
     glColor3f(1, 1, 1);
+
     glutSolidSphere(15, 50, 50);
 }
 
-//Representa o tabuleiro do Resta Um
-void Tabuleiro() {
-
-    //BASE DO TABULEIRO
-    glPushMatrix();
-        glColor3f(0.4, 0, 0);
-        glRotated(inclinacao, 1, 0, 0);
-        glTranslated(0, -5, 0);
-        glScaled(2.5, 0.5, 2.5);
-        Base();
-    glPopMatrix();
+void DesenhaEsferas(){
+    //DEFINE A COR AMBIENTE, DIFUSA, ESPECULAR E A QUANTIDADE DE BRILHO
+    glMaterialfv(GL_FRONT, GL_AMBIENT, Gray);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, LightGray);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, White);
+    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
 
     //ESFERA 1 - COMEÇANDO DO TOPO-ESQUERDA
     glPushMatrix();
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
-        glTranslated(-45, 125, 30);
+        glTranslated(-40, 120, 30);
         Esfera();
 
     //ESFERA 2
@@ -98,11 +100,7 @@ void Tabuleiro() {
         Esfera();
 
     //ESFERA 17
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 18
-        glTranslated(40, 0, 0);
+        glTranslated(80, 0, 0);
         Esfera();
 
     //ESFERA 19
@@ -168,14 +166,32 @@ void Tabuleiro() {
     glPopMatrix();
 }
 
+//Representa o tabuleiro do Resta Um
+void Tabuleiro() {
+    glMaterialfv(GL_FRONT, GL_AMBIENT, Red);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, DarkRed);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, White);
+    glMaterialf(GL_FRONT, GL_SHININESS, 30.0);
+
+    //BASE DO TABULEIRO
+    glPushMatrix();
+        glColor3f(0.4, 0, 0);
+        glRotated(inclinacao, 1, 0, 0);
+        glTranslated(0, -5, 0);
+        glScaled(2.5, 0.5, 2.5);
+        Base();
+    glPopMatrix();
+}
+
 // Função callback chamada para fazer o desenho
 void Desenha(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT); //Limpa o buffer de profundidade
 
-    glColor3f(1.0f, 0.0f, 0.0f);
     Tabuleiro();
+
+    DesenhaEsferas();
 
     glutSwapBuffers();
 }
@@ -184,7 +200,27 @@ void Desenha(void)
 void Inicializa (void)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
+
+    //Setup de iluminação
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    //Setup de intensidade e cor da iluminação
+    GLfloat luzAmbiente[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat luzDifusa[] = {0.8, 0.8, 0.8, 1.0};
+    GLfloat luzEspecular[] = {1.0, 1.0, 1.0, 1.0};
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, luzDifusa);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, luzEspecular);
+
+    //Posicionando a luz
+    GLfloat posicaoLuz[] = {0, 400, -100, 1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+
+    glEnable(GL_DEPTH_TEST); //Habilita a profundidade (impede que faces sejam renderizadas na frente de outras faces quando na verdade estão atrás)
     angle=45;
 }
 
@@ -231,6 +267,7 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
     EspecificaParametrosVisualizacao();
 }
 
+//Função callback para gerenciar eventos do teclado
 void GerenciaTeclado(unsigned char key, int x, int y)
 {
     if (key == 'w') {
@@ -255,12 +292,7 @@ void GerenciaTeclado(unsigned char key, int x, int y)
 // Função callback chamada para gerenciar eventos do mouse
 void GerenciaMouse(int button, int state, int x, int y)
 {
-    if (button == GLUT_LEFT_BUTTON)
 
-    if (button == GLUT_RIGHT_BUTTON)
-
-    EspecificaParametrosVisualizacao();
-    glutPostRedisplay();
 }
 
 // Programa Principal
