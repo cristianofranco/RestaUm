@@ -1,6 +1,8 @@
 //Resta Um
 
 #include <GL/glut.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 GLfloat angle, fAspect, inclinacao = 0;
 //Definição de cores RGBA para usar com MaterialFV
@@ -8,12 +10,80 @@ GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
 GLfloat DarkRed[] = {0.2, 0.0, 0.0, 1.0};
 GLfloat Red[] = {0.4, 0.0, 0.0, 1.0};
 GLfloat White[] = {1, 1, 1, 1.0};
-GLfloat LightGray[] = {0.85, 0.85, 0.85};
+GLfloat LightGray[] = {0.80, 0.80, 0.80};
 GLfloat Gray[] = {0.45, 0.45, 0.45};
 
-//Representa a base do tabuleiro
-void Base(){
-    glutSolidCube(50);
+void BaseCubo()
+/*Especifica o lado de um cubo*/
+{
+	glBegin(GL_POLYGON);
+		glTexCoord2f(0.0,0.0);
+		glVertex3d(-0.5,-0.5,0.0);
+
+		glTexCoord2f(0.0,1.0);
+		glVertex3d(-0.5,0.5,0.0);
+
+		glTexCoord2f(1.0,1.0);
+		glVertex3d(0.5,0.5,0.0);
+
+		glTexCoord2f(1.0,0.0);
+		glVertex3d(0.5,-0.5,0.0);
+	glEnd();
+}
+
+void Cubo()
+{
+	glPushMatrix();
+
+	BaseCubo();
+
+	glPushMatrix();
+	//Eixo +x
+	glTranslated(0.5,0.0,0.5);
+	glRotated(90.0,0.0,1.0,0.0);
+	BaseCubo();
+
+	glPopMatrix();
+
+	//Eixo -x
+	glPushMatrix();
+	glTranslated(-0.5,0.0,0.5);
+	glRotated(-90.0,0.0,1.0,0.0);
+	BaseCubo();
+	glPopMatrix();
+
+	//Eixo +y
+	glPushMatrix();
+	glTranslated(0.0,0.5,0.5);
+	glRotated(-90.0,1.0,0.0,0.0);
+	BaseCubo();
+	glPopMatrix();
+
+	//Eixo -y
+	glPushMatrix();
+	glTranslated(0.0,-0.5,0.5);
+	glRotated(90.0,1.0,0.0,0.0);
+	BaseCubo();
+	glPopMatrix();
+
+	//Montando a parte de cima
+
+	glBegin(GL_POLYGON);
+		glTexCoord2f(0.0,0.0);
+		glVertex3d(-0.5,-0.5,1.0);
+
+		glTexCoord2f(1.0,0.0);
+		glVertex3d(0.5,-0.5,1.0);
+
+		glTexCoord2f(1.0,1.0);
+		glVertex3d(0.5,0.5,1.0);
+
+		glTexCoord2f(0.0,1.0);
+		glVertex3d(-0.5,0.5,1.0);
+	glEnd();
+
+
+	glPopMatrix();
 }
 
 //Representa uma esfera individual
@@ -28,7 +98,7 @@ void DesenhaEsferas(){
     glMaterialfv(GL_FRONT, GL_AMBIENT, Gray);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, LightGray);
     glMaterialfv(GL_FRONT, GL_SPECULAR, White);
-    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
+    glMaterialf(GL_FRONT, GL_SHININESS, 30.0);
 
     //ESFERA 1 - COMEÇANDO DO TOPO-ESQUERDA
     glPushMatrix();
@@ -168,18 +238,18 @@ void DesenhaEsferas(){
 
 //Representa o tabuleiro do Resta Um
 void Tabuleiro() {
-    glMaterialfv(GL_FRONT, GL_AMBIENT, Red);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, DarkRed);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, DarkRed);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, Red);
     glMaterialfv(GL_FRONT, GL_SPECULAR, White);
-    glMaterialf(GL_FRONT, GL_SHININESS, 30.0);
+    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
 
     //BASE DO TABULEIRO
     glPushMatrix();
         glColor3f(0.4, 0, 0);
         glRotated(inclinacao, 1, 0, 0);
-        glTranslated(0, -5, 0);
-        glScaled(2.5, 0.5, 2.5);
-        Base();
+        glTranslated(0, 3, -62.5);
+        glScaled(125, 10, 125);
+        Cubo();
     glPopMatrix();
 }
 
@@ -196,11 +266,7 @@ void Desenha(void)
     glutSwapBuffers();
 }
 
-// Inicializa parâmetros de rendering
-void Inicializa (void)
-{
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+void ConfiguraIluminacao() {
     //Setup de iluminação
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     glEnable(GL_NORMALIZE);
@@ -217,11 +283,20 @@ void Inicializa (void)
     glLightfv(GL_LIGHT0, GL_AMBIENT, luzEspecular);
 
     //Posicionando a luz
-    GLfloat posicaoLuz[] = {0, 400, -100, 1.0};
+    GLfloat posicaoLuz[] = {0, 200, -200, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+}
+
+// Inicializa parâmetros de rendering
+void Inicializa (void)
+{
+    //Setup iluminação
+    ConfiguraIluminacao();
 
     glEnable(GL_DEPTH_TEST); //Habilita a profundidade (impede que faces sejam renderizadas na frente de outras faces quando na verdade estão atrás)
-    angle=45;
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    angle = 45;
 }
 
 // Função usada para especificar a posição do observador virtual

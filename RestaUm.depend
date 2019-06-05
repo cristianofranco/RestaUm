@@ -217,6 +217,61 @@
 	<stddef.h>
 	<GL/gl.h>
 
-1559679564 source:c:\users\cristiano franco\desktop\restaum\main.c
+1559772563 source:c:\users\cristiano franco\desktop\restaum\main.c
 	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+
+1215468808 c:\program files (x86)\codeblocks\mingw\include\soil.h
+
+1215468808 c:\users\cristiano franco\desktop\restaum\soil.h
+
+1215465208 c:\users\cristiano franco\desktop\restaum\soil\soil.h
+
+1556983158 c:\users\cristiano franco\desktop\restaum\stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
+
+1341006776 c:\program files (x86)\codeblocks\mingw\include\stdio.h
+	<_mingw.h>
+	<stddef.h>
+	<stdarg.h>
+	<sys/types.h>
+
+1341006780 c:\program files (x86)\codeblocks\mingw\include\sys\types.h
+	<_mingw.h>
+	<stddef.h>
+
+1341006774 c:\program files (x86)\codeblocks\mingw\include\limits.h
+	<_mingw.h>
+
+1341006774 c:\program files (x86)\codeblocks\mingw\include\math.h
+	<_mingw.h>
+
+1341006770 c:\program files (x86)\codeblocks\mingw\include\assert.h
+	<_mingw.h>
+
+1341006776 c:\program files (x86)\codeblocks\mingw\include\stdint.h
+	<stddef.h>
+
+1559771285 c:\users\cristiano franco\desktop\restaum\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
 
