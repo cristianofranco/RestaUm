@@ -217,10 +217,10 @@
 	<stddef.h>
 	<GL/gl.h>
 
-1559772563 source:c:\users\cristiano franco\desktop\restaum\main.c
+1559794740 source:c:\users\cristiano franco\desktop\restaum\main.c
 	<GL/glut.h>
 	<stdio.h>
-	<stdlib.h>
+	<stdbool.h>
 
 1215468808 c:\program files (x86)\codeblocks\mingw\include\soil.h
 
