@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 GLint pecasRestantes;
+GLint movRestantes;
 GLfloat angle, fAspect, inclinacao = 0;
 //Definição de cores RGBA para usar com MaterialFV
 GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
@@ -230,14 +231,6 @@ void atualizaTabuleiro() {
         esf33 = true;
 }
 
-//Verifica se o jogo ja acabou
-void verificaFim() {
-    if (pecasRestantes == 1) {
-        printf("PARABENS!!!! VOCE VENCEU!!!\n");
-        inclinacao = 0;
-    }
-}
-
 //Retorna a quantidade de peças que faltam para acabar o jogo
 int quantasFaltam() {
     pecasRestantes = 0; //Zera a quantidade para fazer a contagem
@@ -252,16 +245,72 @@ int quantasFaltam() {
     return pecasRestantes;
 }
 
-void imprimeTab() {
-    printf("\n");
+/*Verifica se é possível realizar uma jogada
+de acordo com o estado do tabuleiro, utilizando
+a posição i e j para verificar os vizinhos */
+int possoJogar(int i, int j){
+
+    //Verificar cima
+    if (tabuleiro[i-1][j] == 1 && i-1 > 0) { //Tem vizinho em cima?
+        if (tabuleiro[i-2][j] == 0 && i-2 > 0) { //Depois do vizinho, tem espaço livre?
+            return 0;
+        }
+    }
+
+    //Verificar baixo
+    if (tabuleiro[i+1][j] == 1 && i+1 < 7) { //Tem vizinho embaixo?
+        if (tabuleiro[i+2][j] == 0 && i+2 < 7) { //Depois do vizinho, tem espaço livre?
+            return 1;
+        }
+    }
+
+    //Verificar esq
+    if (tabuleiro[i][j-1] == 1 && j-1 > 0) { //Tem vizinho na esquerda?
+        if (tabuleiro[i][j-2] == 0 && j-2 > 0) { //Depois do vizinho, tem espaço livre?
+            return 2;
+        }
+    }
+
+    //Verificar dir
+    if (tabuleiro[i][j+1] == 1 && j+1 < 7) { //Tem vizinho na direita?
+        if (tabuleiro[i][j+2] == 0 && j+2 < 7) { //Depois do vizinho, tem espaço livre?
+            return 3;
+        }
+    }
+
+    return -1; //Se não achar condições de jogada, retorna -1.
+}
+
+int quantosMovimentos() {
+    movRestantes = 0;
+
     for (int i=0;i<7;i++) {
-        printf("\n");
         for (int j=0;j<7;j++) {
-            if ((i == 2 && j == 0) || (i == 3 && j == 0) || (i == 4 && j == 0)) {
-                printf("  %d ", tabuleiro[i][j]);
-            } else {
-                printf("%d ", tabuleiro[i][j]);
-            }
+            if (tabuleiro[i][j] == 1)
+                if (possoJogar(i, j) != -1) //Se posso mover esta peca
+                    movRestantes++;
+        }
+    }
+
+    return movRestantes;
+}
+
+//Verifica se o jogo ja acabou
+void verificaFim() {
+
+    quantasFaltam(); //Verifica quantas peças estao no tabuleiro
+    quantosMovimentos(); //Verifica quantos movimentos estas peças ainda podem fazer
+
+    if (pecasRestantes == 1) {
+        printf("PARABENS!!!! VOCE VENCEU!!! :D\n");
+        inclinacao = 0;
+        jogoComecou = false;
+    }
+    else {
+        if (movRestantes == 0) { //Se não posso mais mover nenhuma esfera
+            printf("\nSINTO MUITO... MAS VOCE NAO PODE MOVER MAIS NENHUMA PECA... =(\nVoce perdeu!\n\n");
+            inclinacao = 0;
+            jogoComecou = false;
         }
     }
 }
@@ -305,46 +354,6 @@ void movePeca(int i, int j, int direcao) { ///DIREÇÃO: CIMA=0, BAIXO=1, ESQ=2, D
     }
 }
 
-/*Verifica se é possível realizar uma jogada
-de acordo com o estado do tabuleiro, utilizando
-a posição i e j para verificar os vizinhos */
-int possoJogar(int i, int j){
-
-    //Verificar cima
-    if (tabuleiro[i-1][j] == 1 && i-1 > 0) { //Tem vizinho em cima?
-        if (tabuleiro[i-2][j] == 0 && i-2 > 0) { //Depois do vizinho, tem espaço livre?
-            printf("Posso mover para cima.");
-            return 0;
-        }
-    }
-
-    //Verificar baixo
-    if (tabuleiro[i+1][j] == 1 && i+1 < 7) { //Tem vizinho embaixo?
-        if (tabuleiro[i+2][j] == 0 && i+2 < 7) { //Depois do vizinho, tem espaço livre?
-            printf("Posso mover para baixo.");
-            return 1;
-        }
-    }
-
-    //Verificar esq
-    if (tabuleiro[i][j-1] == 1 && j-1 > 0) { //Tem vizinho na esquerda?
-        if (tabuleiro[i][j-2] == 0 && j-2 > 0) { //Depois do vizinho, tem espaço livre?
-            printf("Posso mover para esq.");
-            return 2;
-        }
-    }
-
-    //Verificar dir
-    if (tabuleiro[i][j+1] == 1 && j+1 < 7) { //Tem vizinho na direita?
-        if (tabuleiro[i][j+2] == 0 && j+2 < 7) { //Depois do vizinho, tem espaço livre?
-            printf("Posso mover para dir.");
-            return 3;
-        }
-    }
-
-    return -1; //Se não achar condições de jogada, retorna -1.
-}
-
 //Realiza uma jogada, se for possível jogar
 void fazJogada(int i, int j) {
     int dir = possoJogar(i, j);
@@ -353,10 +362,7 @@ void fazJogada(int i, int j) {
         movePeca(i, j, dir);
         verificaFim();
         atualizaTabuleiro();
-        imprimeTab();
     }
-    else
-        printf("Voce nao pode mover esta peca\n");
 }
 
 //Se clicou em uma posicao e tiver uma peca nela verifica se pode mover e move.
