@@ -217,9 +217,10 @@
 	<stddef.h>
 	<GL/gl.h>
 
-1559837592 source:c:\users\cristiano franco\desktop\restaum\main.c
+1559853540 source:c:\users\cristiano franco\desktop\restaum\main.c
 	<GL/glut.h>
 	<stdio.h>
+	<stdlib.h>
 	<stdbool.h>
 
 1215468808 c:\program files (x86)\codeblocks\mingw\include\soil.h
@@ -274,4 +275,10 @@
 	"lodepng.h"
 	<iostream>
 	"lodepng.h"
+
+1560257880 source:c:\users\cristiano franco\dropbox\computação gráfica\restaum\main.cpp
+	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
 

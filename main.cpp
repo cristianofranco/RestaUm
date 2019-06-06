@@ -2,18 +2,27 @@
 
 #include <GL/glut.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 GLint pecasRestantes;
 GLint movRestantes;
-GLfloat angle, fAspect, inclinacao = 0;
+
+GLfloat angle, fAspect, inclinacao = 0, escondeDefeito = -20;
+
 //Definição de cores RGBA para usar com MaterialFV
 GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
 GLfloat DarkRed[] = {0.2, 0.0, 0.0, 1.0};
 GLfloat Red[] = {0.4, 0.0, 0.0, 1.0};
 GLfloat White[] = {1, 1, 1, 1.0};
-GLfloat LightGray[] = {0.80, 0.80, 0.80};
-GLfloat Gray[] = {0.45, 0.45, 0.45};
+GLfloat LightGray[] = {0.95, 0.95, 0.95, 0.90};
+GLfloat Gray[] = {0.65, 0.65, 0.65, 0.80};
+
+//TEXTURAS
+GLUquadric* esfera;
+GLuint DataPos, imageSize;
+GLsizei Width,Height;
+GLuint texture_id[2]; //Textura mármore=1 e textura vidro=2
 
 /*------------------------- TABULEIRO DO JOGO --------------------------*/
 
@@ -60,6 +69,7 @@ bool esf30 = true;
 bool esf31 = true;
 bool esf32 = true;
 bool esf33 = true;
+
 /*------------------------- LOGICA DO JOGO --------------------------*/
 
 void atualizaTabuleiro() {
@@ -705,9 +715,52 @@ void clicouPos(int x, int y) {
 
 /*------------------------ APARENCIA DO JOGO -------------------------*/
 
-void BaseCubo()
+void LoadBMP(char *filename) {
+    #define SAIR {fclose(fp_arquivo); return ;}
+    #define CTOI(C) (*(int*)&C)
+
+    GLubyte *image;
+    GLubyte Header[0x54];
+
+    FILE * fp_arquivo = fopen(filename,"rb");
+
+    if (fread(Header,1,0x36,fp_arquivo)!=0x36)
+    SAIR;
+
+    Width = CTOI(Header[0x12]);
+    Height = CTOI(Header[0x16]);
+    ( CTOI(Header[0x0A]) == 0 ) ? ( DataPos=0x36 ) : ( DataPos = CTOI(Header[0x0A]) );
+    imageSize=Width*Height*3;
+
+    image = (GLubyte *) malloc ( imageSize );
+    int retorno;
+    retorno = fread(image,1,imageSize,fp_arquivo);
+
+    int t, i;
+    for ( i = 0; i < imageSize; i += 3 ) {
+        t = image[i];
+        image[i] = image[i+2];
+        image[i+2] = t;
+    }
+
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    fclose (fp_arquivo);
+    free (image);
+
+    return ;
+}
+
+void BaseCubo(GLuint *textura_id, int i)
 /*Especifica o lado de um cubo*/
 {
+    glBindTexture(GL_TEXTURE_2D, textura_id[i]);
+
 	glBegin(GL_POLYGON);
 		glTexCoord2f(0.0,0.0);
 		glVertex3d(-0.5,-0.5,0.0);
@@ -727,13 +780,13 @@ void Cubo()
 {
 	glPushMatrix();
 
-	BaseCubo();
+	BaseCubo(texture_id, 1);
 
 	glPushMatrix();
 	//Eixo +x
 	glTranslated(0.5,0.0,0.5);
 	glRotated(90.0,0.0,1.0,0.0);
-	BaseCubo();
+	BaseCubo(texture_id, 1);
 
 	glPopMatrix();
 
@@ -741,21 +794,21 @@ void Cubo()
 	glPushMatrix();
 	glTranslated(-0.5,0.0,0.5);
 	glRotated(-90.0,0.0,1.0,0.0);
-	BaseCubo();
+	BaseCubo(texture_id, 1);
 	glPopMatrix();
 
 	//Eixo +y
 	glPushMatrix();
 	glTranslated(0.0,0.5,0.5);
 	glRotated(-90.0,1.0,0.0,0.0);
-	BaseCubo();
+	BaseCubo(texture_id, 1);
 	glPopMatrix();
 
 	//Eixo -y
 	glPushMatrix();
 	glTranslated(0.0,-0.5,0.5);
 	glRotated(90.0,1.0,0.0,0.0);
-	BaseCubo();
+	BaseCubo(texture_id, 1);
 	glPopMatrix();
 
 	//Montando a parte de cima
@@ -779,21 +832,33 @@ void Cubo()
 }
 
 //Representa uma esfera individual
-void Esfera(){ glColor3f(1, 1, 1); glutSolidSphere(15, 50, 50);}
+void Esfera(int i){
+
+    gluQuadricDrawStyle(esfera, GLU_FILL);
+    glBindTexture(GL_TEXTURE_2D, texture_id[i]);
+
+    gluQuadricTexture(esfera, GL_TRUE);
+    gluQuadricNormals(esfera, GLU_SMOOTH);
+
+    glRotated(escondeDefeito, 1, 0, 0);
+
+    gluSphere(esfera, 15, 50, 50);
+
+}
 
 void DesenhaEsferas(){
     //DEFINE A COR AMBIENTE, DIFUSA, ESPECULAR E A QUANTIDADE DE BRILHO
     glMaterialfv(GL_FRONT, GL_AMBIENT, Gray);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, LightGray);
     glMaterialfv(GL_FRONT, GL_SPECULAR, White);
-    glMaterialf(GL_FRONT, GL_SHININESS, 30.0);
+    glMaterialf(GL_FRONT, GL_SHININESS, 120.0);
 
     if (esf1) {
     glPushMatrix();
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 120, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -802,7 +867,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 120, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -811,7 +876,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 120, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -820,7 +885,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 80, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -829,7 +894,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 80, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -838,7 +903,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 80, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -847,7 +912,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-120, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -856,7 +921,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-80, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -865,7 +930,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -874,7 +939,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -883,7 +948,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -892,7 +957,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(80, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -901,7 +966,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(120, 40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -910,7 +975,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-120, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -919,7 +984,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-80, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -928,7 +993,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -937,7 +1002,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -946,7 +1011,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -955,7 +1020,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(80, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -964,7 +1029,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(120, 0, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -973,7 +1038,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-120, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -982,7 +1047,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-80, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -991,7 +1056,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1000,7 +1065,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1009,7 +1074,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1018,7 +1083,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(80, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1027,7 +1092,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(120, -40, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1036,7 +1101,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, -80, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1045,7 +1110,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, -80, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1054,7 +1119,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, -80, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1063,7 +1128,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, -120, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1072,7 +1137,7 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, -120, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 
@@ -1081,15 +1146,15 @@ void DesenhaEsferas(){
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, -120, 30);
-        Esfera();
+        Esfera(2);
     glPopMatrix();
     }
 }
 
 //Representa o tabuleiro do Resta Um
 void Tabuleiro() {
-    glMaterialfv(GL_FRONT, GL_AMBIENT, DarkRed);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, Red);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, White);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, White);
     glMaterialfv(GL_FRONT, GL_SPECULAR, White);
     glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
 
@@ -1109,7 +1174,17 @@ void Desenha(void)
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT); //Limpa o buffer de profundidade
 
+    glGenTextures ( 2, texture_id ); //Gera as 2 texturas
+
+    glBindTexture ( GL_TEXTURE_2D, texture_id[1] );
+
+    LoadBMP("textures\\marmore.bmp");
+
     Tabuleiro();
+
+    glBindTexture(GL_TEXTURE_2D, texture_id[2]); //Muda para textura de vidro
+
+    LoadBMP("textures\\vidro.bmp");
 
     DesenhaEsferas();
 
@@ -1133,7 +1208,7 @@ void ConfiguraIluminacao() {
     glLightfv(GL_LIGHT0, GL_AMBIENT, luzEspecular);
 
     //Posicionando a luz
-    GLfloat posicaoLuz[] = {0, 200, -200, 1.0};
+    GLfloat posicaoLuz[] = {0, 200, 0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
 }
 
@@ -1143,7 +1218,13 @@ void Inicializa (void)
     //Setup iluminação
     ConfiguraIluminacao();
 
+    //Inicializa a esfera
+    esfera = gluNewQuadric();
+
+    glEnable(GL_TEXTURE_2D); //Habilita textura 2D
     glEnable(GL_DEPTH_TEST); //Habilita a profundidade (impede que faces sejam renderizadas na frente de outras faces quando na verdade estão atrás)
+    glEnable(GL_BLEND); //PERMITE TRANSPARENCIA
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //SETA A TRANSPARENCIA A PARTIR DAS CORES ALPHA DO OBJETO
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     angle = 45;
@@ -1202,6 +1283,7 @@ void GerenciaTeclado(unsigned char key, int x, int y)
                 inclinacao = 90;
             } else {
                 inclinacao+= 5;
+                escondeDefeito-= 4;
             }
         }
         if (key == 's') {
@@ -1209,6 +1291,7 @@ void GerenciaTeclado(unsigned char key, int x, int y)
                 inclinacao = 0;
             } else {
                 inclinacao-= 5;
+                escondeDefeito+= 4;
             }
         }
 
