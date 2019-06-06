@@ -14,6 +14,8 @@ GLfloat White[] = {1, 1, 1, 1.0};
 GLfloat LightGray[] = {0.80, 0.80, 0.80};
 GLfloat Gray[] = {0.45, 0.45, 0.45};
 
+/*------------------------- TABULEIRO DO JOGO --------------------------*/
+
 ///-1 = NAOPODEJOGAR 0 = VAZIO 1 = COM PEÇA
 int tabuleiro[7][7] = {{-1, -1, 1, 1, 1, -1, -1},
                        {-1, -1, 1, 1, 1, -1, -1},
@@ -23,7 +25,210 @@ int tabuleiro[7][7] = {{-1, -1, 1, 1, 1, -1, -1},
                        {-1,-1, 1, 1, 1, -1,-1},
                        {-1,-1, 1, 1, 1, -1,-1}};
 
+bool jogoComecou = false;
+bool esf1 = true;
+bool esf2 = true;
+bool esf3 = true;
+bool esf4 = true;
+bool esf5 = true;
+bool esf6 = true;
+bool esf7 = true;
+bool esf8 = true;
+bool esf9 = true;
+bool esf10 = true;
+bool esf11 = true;
+bool esf12 = true;
+bool esf13 = true;
+bool esf14 = true;
+bool esf15 = true;
+bool esf16 = true;
+bool esf17 = false; ///CENTRO
+bool esf18 = true;
+bool esf19 = true;
+bool esf20 = true;
+bool esf21 = true;
+bool esf22 = true;
+bool esf23 = true;
+bool esf24 = true;
+bool esf25 = true;
+bool esf26 = true;
+bool esf27 = true;
+bool esf28 = true;
+bool esf29 = true;
+bool esf30 = true;
+bool esf31 = true;
+bool esf32 = true;
+bool esf33 = true;
 /*------------------------- LOGICA DO JOGO --------------------------*/
+
+void atualizaTabuleiro() {
+    ///SE A POSICAO NA MATRIZ FOR DIFERENTE DE 1, MUDA O BOOLEAN PARA FALSO, REMOVENDO A ESFERA
+    if (tabuleiro[0][2] != 1)
+        esf1 = false;
+    else
+        esf1 = true;
+
+    if (tabuleiro[0][3] != 1)
+        esf2 = false;
+    else
+        esf2 = true;
+
+    if (tabuleiro[0][4] != 1)
+        esf3 = false;
+    else
+        esf3 = true;
+
+    if (tabuleiro[1][2] != 1)
+        esf4 = false;
+    else
+        esf4 = true;
+
+    if (tabuleiro[1][3] != 1)
+        esf5 = false;
+    else
+        esf5 = true;
+
+    if (tabuleiro[1][4] != 1)
+        esf6 = false;
+    else
+        esf6 = true;
+
+    if (tabuleiro[2][0] != 1)
+        esf7 = false;
+    else
+        esf7 = true;
+
+    if (tabuleiro[2][1] != 1)
+        esf8 = false;
+    else
+        esf8 = true;
+
+    if (tabuleiro[2][2] != 1)
+        esf9 = false;
+    else
+        esf9 = true;
+
+    if (tabuleiro[2][3] != 1)
+        esf10 = false;
+    else
+        esf10 = true;
+
+    if (tabuleiro[2][4] != 1)
+        esf11 = false;
+    else
+        esf11 = true;
+
+    if (tabuleiro[2][5] != 1)
+        esf12 = false;
+    else
+        esf12 = true;
+
+    if (tabuleiro[2][6] != 1)
+        esf13 = false;
+    else
+        esf13 = true;
+
+    if (tabuleiro[3][0] != 1)
+        esf14 = false;
+    else
+        esf14 = true;
+
+    if (tabuleiro[3][1] != 1)
+        esf15 = false;
+    else
+        esf15 = true;
+
+    if (tabuleiro[3][2] != 1)
+        esf16 = false;
+    else
+        esf16 = true;
+
+    //CENTRO
+    if (tabuleiro[3][3] != 1)
+        esf17 = false;
+    else
+        esf17 = true;
+
+    if (tabuleiro[3][4] != 1)
+        esf18 = false;
+    else
+        esf18 = true;
+
+    if (tabuleiro[3][5] != 1)
+        esf19 = false;
+    else
+        esf19 = true;
+
+    if (tabuleiro[3][6] != 1)
+        esf20 = false;
+    else
+        esf20 = true;
+
+    if (tabuleiro[4][0] != 1)
+        esf21 = false;
+    else
+        esf21 = true;
+
+    if (tabuleiro[4][1] != 1)
+        esf22 = false;
+    else
+        esf22 = true;
+
+    if (tabuleiro[4][2] != 1)
+        esf23 = false;
+    else
+        esf23 = true;
+
+    if (tabuleiro[4][3] != 1)
+        esf24 = false;
+    else
+        esf24 = true;
+
+    if (tabuleiro[4][4] != 1)
+        esf25 = false;
+    else
+        esf25 = true;
+
+    if (tabuleiro[4][5] != 1)
+        esf26 = false;
+    else
+        esf26 = true;
+
+    if (tabuleiro[4][6] != 1)
+        esf27 = false;
+    else
+        esf27 = true;
+
+    if (tabuleiro[5][2] != 1)
+        esf28 = false;
+    else
+        esf28 = true;
+
+    if (tabuleiro[5][3] != 1)
+        esf29 = false;
+    else
+        esf29 = true;
+
+    if (tabuleiro[5][4] != 1)
+        esf30 = false;
+    else
+        esf30 = true;
+
+    if (tabuleiro[6][2] != 1)
+        esf31 = false;
+    else
+        esf31 = true;
+
+    if (tabuleiro[6][3] != 1)
+        esf32 = false;
+    else
+        esf32 = true;
+
+    if (tabuleiro[6][4] != 1)
+        esf33 = false;
+    else
+        esf33 = true;
+}
 
 //Verifica se o jogo ja acabou
 void verificaFim() {
@@ -144,9 +349,10 @@ int possoJogar(int i, int j){
 void fazJogada(int i, int j) {
     int dir = possoJogar(i, j);
 
-    if (dir != -1) { //Verifica se pode jogar, se sim, faz a jogada
+    if (dir != -1) { //Verifica se pode jogar, se sim, faz a jogada e atualiza o tabuleiro
         movePeca(i, j, dir);
         verificaFim();
+        atualizaTabuleiro();
         imprimeTab();
     }
     else
@@ -155,334 +361,339 @@ void fazJogada(int i, int j) {
 
 //Se clicou em uma posicao e tiver uma peca nela verifica se pode mover e move.
 void clicouPos(int x, int y) {
-    //Se clicou na posicao 1
-    if (x > 301 && x < 355 && y > 94 && y < 147)
-    {
-        if (tabuleiro[0][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
-        }
-        else
-            fazJogada(0, 2);
-    }
 
-    //Se clicou na posicao 2
-    if (x > 373 && x < 426 && y > 94 && y < 147)
-    {
-        if (tabuleiro[0][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
-        }
-        else
-            fazJogada(0, 3);
-    }
+    if (jogoComecou) { //só faz verificações se o jogo ja começou
 
-    //Se clicou na posicao 3
-    if (x > 445 && x < 498 && y > 94 && y < 147)
-    {
-        if (tabuleiro[0][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 1
+        if (x > 301 && x < 355 && y > 94 && y < 147)
+        {
+            if (tabuleiro[0][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(0, 2);
         }
-        else
-            fazJogada(0, 4);
-    }
 
-    //Se clicou na posicao 4
-    if (x > 301 && x < 355 && y > 164 && y < 217)
-    {
-        if (tabuleiro[1][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 2
+        if (x > 373 && x < 426 && y > 94 && y < 147)
+        {
+            if (tabuleiro[0][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(0, 3);
         }
-        else
-            fazJogada(1, 2);
-    }
 
-    //Se clicou na posicao 5
-    if (x > 373 && x < 426 && y > 164 && y < 217)
-    {
-        if (tabuleiro[1][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 3
+        if (x > 445 && x < 498 && y > 94 && y < 147)
+        {
+            if (tabuleiro[0][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(0, 4);
         }
-        else
-            fazJogada(1, 3);
-    }
 
-    //Se clicou na posicao 6
-    if (x > 445 && x < 498 && y > 164 && y < 217)
-    {
-        if (tabuleiro[1][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 4
+        if (x > 301 && x < 355 && y > 164 && y < 217)
+        {
+            if (tabuleiro[1][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(1, 2);
         }
-        else
-            fazJogada(1, 4);
-    }
 
-    //Se clicou na posicao 7
-    if (x > 175 && x < 226 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][0] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 5
+        if (x > 373 && x < 426 && y > 164 && y < 217)
+        {
+            if (tabuleiro[1][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(1, 3);
         }
-        else
-            fazJogada(2, 0);
-    }
 
-    //Se clicou na posicao 8
-    if (x > 247 && x < 298 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][1] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 6
+        if (x > 445 && x < 498 && y > 164 && y < 217)
+        {
+            if (tabuleiro[1][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(1, 4);
         }
-        else
-            fazJogada(2, 1);
-    }
 
-    //Se clicou na posicao 9
-    if (x > 319 && x < 370 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 7
+        if (x > 175 && x < 226 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][0] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 0);
         }
-        else
-            fazJogada(2, 2);
-    }
 
-    //Se clicou na posicao 10
-    if (x > 375 && x < 425 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 8
+        if (x > 247 && x < 298 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][1] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 1);
         }
-        else
-            fazJogada(2, 3);
-    }
 
-    //Se clicou na posicao 11
-    if (x > 442 && x < 492 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 9
+        if (x > 319 && x < 370 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 2);
         }
-        else
-            fazJogada(2, 4);
-    }
 
-    //Se clicou na posicao 12
-    if (x > 508 && x < 558 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][5] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 10
+        if (x > 375 && x < 425 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 3);
         }
-        else
-            fazJogada(2, 5);
-    }
 
-    //Se clicou na posicao 13
-    if (x > 573 && x < 625 && y > 234 && y < 281)
-    {
-        if (tabuleiro[2][6] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 11
+        if (x > 442 && x < 492 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 4);
         }
-        else
-            fazJogada(2, 6);
-    }
 
-    //Se clicou na posicao 14
-    if (x > 175 && x < 226 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][0] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 12
+        if (x > 508 && x < 558 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][5] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 5);
         }
-        else
-            fazJogada(3, 0);
-    }
 
-    //Se clicou na posicao 15
-    if (x > 247 && x < 298 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][1] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 13
+        if (x > 573 && x < 625 && y > 234 && y < 281)
+        {
+            if (tabuleiro[2][6] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(2, 6);
         }
-        else
-            fazJogada(3, 1);
-    }
 
-    //Se clicou na posicao 16
-    if (x > 319 && x < 370 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 14
+        if (x > 175 && x < 226 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][0] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 0);
         }
-        else
-            fazJogada(3, 2);
-    }
 
-    //Se clicou na posicao 17
-    if (x > 375 && x < 425 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 15
+        if (x > 247 && x < 298 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][1] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 1);
         }
-        else
-            fazJogada(3, 3);
-    }
 
-    //Se clicou na posicao 18
-    if (x > 442 && x < 492 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 16
+        if (x > 319 && x < 370 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 2);
         }
-        else
-            fazJogada(3, 4);
-    }
 
-    //Se clicou na posicao 19
-    if (x > 508 && x < 558 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][5] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 17
+        if (x > 375 && x < 425 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 3);
         }
-        else
-            fazJogada(3, 5);
-    }
 
-    //Se clicou na posicao 20
-    if (x > 573 && x < 625 && y > 293 && y < 342)
-    {
-        if (tabuleiro[3][6] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 18
+        if (x > 442 && x < 492 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 4);
         }
-        else
-            fazJogada(3, 6);
-    }
 
-    //Se clicou na posicao 21
-    if (x > 175 && x < 226 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][0] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 19
+        if (x > 508 && x < 558 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][5] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 5);
         }
-        else
-            fazJogada(4, 0);
-    }
 
-    //Se clicou na posicao 22
-    if (x > 247 && x < 298 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][1] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 20
+        if (x > 573 && x < 625 && y > 293 && y < 342)
+        {
+            if (tabuleiro[3][6] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(3, 6);
         }
-        else
-            fazJogada(4, 1);
-    }
 
-    //Se clicou na posicao 23
-    if (x > 319 && x < 370 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 21
+        if (x > 175 && x < 226 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][0] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 0);
         }
-        else
-            fazJogada(4, 2);
-    }
 
-    //Se clicou na posicao 24
-    if (x > 375 && x < 425 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 22
+        if (x > 247 && x < 298 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][1] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 1);
         }
-        else
-            fazJogada(4, 3);
-    }
 
-    //Se clicou na posicao 25
-    if (x > 442 && x < 492 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 23
+        if (x > 319 && x < 370 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 2);
         }
-        else
-            fazJogada(4, 4);
-    }
 
-    //Se clicou na posicao 26
-    if (x > 508 && x < 558 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][5] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 24
+        if (x > 375 && x < 425 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 3);
         }
-        else
-            fazJogada(4, 5);
-    }
 
-    //Se clicou na posicao 27
-    if (x > 573 && x < 625 && y > 352 && y < 398)
-    {
-        if (tabuleiro[4][6] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 25
+        if (x > 442 && x < 492 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 4);
         }
-        else
-            fazJogada(4, 6);
-    }
 
-    //Se clicou na posicao 28
-    if (x > 319 && x < 363 && y > 405 && y < 451)
-    {
-        if (tabuleiro[5][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 26
+        if (x > 508 && x < 558 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][5] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 5);
         }
-        else
-            fazJogada(5, 2);
-    }
 
-    //Se clicou na posicao 29
-    if (x > 378 && x < 422 && y > 405 && y < 451)
-    {
-        if (tabuleiro[5][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 27
+        if (x > 573 && x < 625 && y > 352 && y < 398)
+        {
+            if (tabuleiro[4][6] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(4, 6);
         }
-        else
-            fazJogada(5, 3);
-    }
 
-    //Se clicou na posicao 30
-    if (x > 437 && x < 483 && y > 405 && y < 451)
-    {
-        if (tabuleiro[5][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 28
+        if (x > 319 && x < 363 && y > 405 && y < 451)
+        {
+            if (tabuleiro[5][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(5, 2);
         }
-        else
-            fazJogada(5, 4);
-    }
 
-    //Se clicou na posicao 31
-    if (x > 320 && x < 363 && y > 457 && y < 501)
-    {
-        if (tabuleiro[6][2] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 29
+        if (x > 378 && x < 422 && y > 405 && y < 451)
+        {
+            if (tabuleiro[5][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(5, 3);
         }
-        else
-            fazJogada(6, 2);
-    }
 
-    //Se clicou na posicao 32
-    if (x > 377 && x < 422 && y > 457 && y < 501)
-    {
-        if (tabuleiro[6][3] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 30
+        if (x > 437 && x < 483 && y > 405 && y < 451)
+        {
+            if (tabuleiro[5][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(5, 4);
         }
-        else
-            fazJogada(6, 3);
-    }
 
-    //Se clicou na posicao 33
-    if (x > 436 && x < 480 && y > 457 && y < 501)
-    {
-        if (tabuleiro[6][4] != 1) {
-            printf("\nnao tem peca onde voce clicou.\n");
+        //Se clicou na posicao 31
+        if (x > 320 && x < 363 && y > 457 && y < 501)
+        {
+            if (tabuleiro[6][2] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(6, 2);
         }
-        else
-            fazJogada(6, 4);
+
+        //Se clicou na posicao 32
+        if (x > 377 && x < 422 && y > 457 && y < 501)
+        {
+            if (tabuleiro[6][3] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(6, 3);
+        }
+
+        //Se clicou na posicao 33
+        if (x > 436 && x < 480 && y > 457 && y < 501)
+        {
+            if (tabuleiro[6][4] != 1) {
+                printf("\nnao tem peca onde voce clicou.\n");
+            }
+            else
+                fazJogada(6, 4);
+        }
+
     }
 }
 
@@ -562,11 +773,7 @@ void Cubo()
 }
 
 //Representa uma esfera individual
-void Esfera(){
-    glColor3f(1, 1, 1);
-
-    glutSolidSphere(15, 50, 50);
-}
+void Esfera(){ glColor3f(1, 1, 1); glutSolidSphere(15, 50, 50);}
 
 void DesenhaEsferas(){
     //DEFINE A COR AMBIENTE, DIFUSA, ESPECULAR E A QUANTIDADE DE BRILHO
@@ -575,140 +782,302 @@ void DesenhaEsferas(){
     glMaterialfv(GL_FRONT, GL_SPECULAR, White);
     glMaterialf(GL_FRONT, GL_SHININESS, 30.0);
 
-    //ESFERA 1 - COMEÇANDO DO TOPO-ESQUERDA
+    if (esf1) {
     glPushMatrix();
         glRotated(inclinacao - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 120, 30);
         Esfera();
-
-    //ESFERA 2
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 3
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 4
-        glTranslated(-80, -40, 0);
-        Esfera();
-
-    //ESFERA 5
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 6
-        glTranslated(40, 0, 0);
-        Esfera();
-
-   //ESFERA 7
-        glTranslated(-160, -40, 0);
-        Esfera();
-
-    //ESFERA 8
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 9
-        glTranslated(40, 0, 0);
-        Esfera();
-
-
-    //ESFERA 10
-        glTranslated(40, 0, 0);
-        Esfera();
-
-
-    //ESFERA 11
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 12
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 13
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 14
-        glTranslated(-240, -40, 0);
-        Esfera();
-
-    //ESFERA 15
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 16
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 17
-        glTranslated(80, 0, 0);
-        Esfera();
-
-    //ESFERA 19
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 20
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 21
-        glTranslated(-240, -40, 0);
-        Esfera();
-
-    //ESFERA 22
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 23
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 24
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 25
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 26
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 27
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 28
-        glTranslated(-160, -40, 0);
-        Esfera();
-
-    //ESFERA 29
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 30
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 31
-        glTranslated(-80, -40, 0);
-        Esfera();
-
-    //ESFERA 32
-        glTranslated(40, 0, 0);
-        Esfera();
-
-    //ESFERA 33
-        glTranslated(40, 0, 0);
-        Esfera();
-
     glPopMatrix();
+    }
+
+    if (esf2) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, 120, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf3) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, 120, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf4) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-40, 80, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf5) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, 80, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf6) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, 80, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf7) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-120, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf8) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-80, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf9) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-40, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if(esf10) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf11) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf12) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(80, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf13) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(120, 40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf14) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-120, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf15) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-80, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf16) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-40, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf17) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf18) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf19) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(80, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf20) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(120, 0, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf21) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-120, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf22) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-80, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf23) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-40, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf24) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf25) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf26) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(80, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf27) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(120, -40, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf28) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-40, -80, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf29) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, -80, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf30) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, -80, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf31) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(-40, -120, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf32) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(0, -120, 30);
+        Esfera();
+    glPopMatrix();
+    }
+
+    if (esf33) {
+    glPushMatrix();
+        glRotated(inclinacao - 90, 1, 0, 0);
+        glScaled(0.45, 0.45, 0.45);
+        glTranslated(40, -120, 30);
+        Esfera();
+    glPopMatrix();
+    }
 }
 
 //Representa o tabuleiro do Resta Um
@@ -820,19 +1189,23 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 //Função callback para gerenciar eventos do teclado
 void GerenciaTeclado(unsigned char key, int x, int y)
 {
-    if (key == 'w') {
-        if (inclinacao == 90) {
-            inclinacao = 90;
-        } else {
-            inclinacao+= 5;
+    if (!jogoComecou) { //Se o jogo ainda nao começou permite que o jogador gire o tabuleiro
+
+        if (key == 'w') {
+            if (inclinacao == 90) {
+                inclinacao = 90;
+            } else {
+                inclinacao+= 5;
+            }
         }
-    }
-    if (key == 's') {
-        if (inclinacao == 0) {
-            inclinacao = 0;
-        } else {
-            inclinacao-= 5;
+        if (key == 's') {
+            if (inclinacao == 0) {
+                inclinacao = 0;
+            } else {
+                inclinacao-= 5;
+            }
         }
+
     }
 
     EspecificaParametrosVisualizacao();
@@ -843,6 +1216,8 @@ void MenuJogo(int op) {
     switch(op) {
     case 0:
         printf("Jogo iniciado!");
+
+        jogoComecou = true; //Altera o bool
 
         inclinacao = 90; //Deixa o tabuleiro em pe
 
