@@ -13,11 +13,10 @@ GLfloat angle, fAspect, eixoX = 0, eixoY = 0;
 
 //Definição de cores RGBA para usar com MaterialFV
 GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
-GLfloat DarkRed[] = {0.2, 0.0, 0.0, 1.0};
-GLfloat Red[] = {0.4, 0.0, 0.0, 1.0};
+GLfloat DarkGray[] = {0.4, 0.4, 0.4, 0.85};
 GLfloat White[] = {1, 1, 1, 1.0};
 GLfloat LightGray[] = {0.95, 0.95, 0.95, 0.85};
-GLfloat Gray[] = {0.65, 0.65, 0.65, 0.80};
+GLfloat Gray[] = {0.65, 0.65, 0.65, 0.95};
 
 //TEXTURAS
 GLUquadric* esfera;
@@ -1000,11 +999,13 @@ void Esfera(int i){
 }
 
 void DesenhaEsferas(){
+
     //DEFINE A COR AMBIENTE, DIFUSA, ESPECULAR E A QUANTIDADE DE BRILHO
     glMaterialfv(GL_FRONT, GL_AMBIENT, Gray);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, LightGray);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, White);
-    glMaterialf(GL_FRONT, GL_SHININESS, 120.0);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, DarkGray);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, White);
+    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
+
 
     if (esf1) {
     glPushMatrix();
@@ -1386,9 +1387,9 @@ void ConfiguraIluminacao() {
     glEnable(GL_LIGHT0);
 
     //Setup de intensidade e cor da iluminação
-    GLfloat luzAmbiente[] = {0.2, 0.2, 0.2, 1.0};
-    GLfloat luzDifusa[] = {0.8, 0.8, 0.8, 1.0};
-    GLfloat luzEspecular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat luzAmbiente[] = {0.5, 0.5, 0.5, 1.0};
+    GLfloat luzDifusa[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat luzEspecular[] = {0.3, 0.3, 0.3, 1.0};
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
@@ -1470,30 +1471,21 @@ void GerenciaTeclado(unsigned char key, int x, int y)
         if (!jogoComecou) { //Se o jogo ainda nao começou permite que o jogador gire o tabuleiro
 
             if (key == 'w') {
-                if (eixoX == 180) {
-                    eixoX = 180;
-                } else {
-                    eixoX+= 5;
-                }
-            }
-            if (key == 's') {
-                if (eixoX == -30) {
-                    eixoX = -30;
-                } else {
-                    eixoX-= 5;
-                if (eixoX == -120) {
-                    eixoX = -120;
+                if (eixoX == -180) {
+                    eixoX = -180;
                 } else {
                     eixoX-= 5;
                 }
             }
+
             if (key == 's') {
-                if (eixoX == 180) {
-                    eixoX = 180;
+                if (eixoX == 120) {
+                    eixoX = 120;
                 } else {
                     eixoX+= 5;
                 }
             }
+
             if (key == 'a') {
                 if (eixoY == -120) {
                     eixoY = -120;
@@ -1513,7 +1505,6 @@ void GerenciaTeclado(unsigned char key, int x, int y)
 
         EspecificaParametrosVisualizacao();
         glutPostRedisplay();
-    }
 }
 
 void MenuJogo(int op) {
