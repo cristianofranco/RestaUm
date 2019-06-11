@@ -276,9 +276,13 @@
 	<iostream>
 	"lodepng.h"
 
+<<<<<<< HEAD
 1559771285 D
 
 1560258951 source:c:\users\cristiano franco\dropbox\computação gráfica\restaum\main.cpp
+=======
+1560269072 source:c:\users\cristiano franco\dropbox\computação gráfica\restaum\main.cpp
+>>>>>>> EscolherEntreDuasJogadas
 	<GL/glut.h>
 	<stdio.h>
 	<stdlib.h>
