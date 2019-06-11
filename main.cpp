@@ -8,7 +8,7 @@
 GLint pecasRestantes;
 GLint movRestantes;
 
-GLfloat angle, fAspect, inclinacao = 0;
+GLfloat angle, fAspect, eixoX = 0, eixoY = 0;
 
 //Definição de cores RGBA para usar com MaterialFV
 GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
@@ -313,13 +313,11 @@ void verificaFim() {
 
     if (pecasRestantes == 1) {
         printf("PARABENS!!!! VOCE VENCEU!!! :D\n");
-        inclinacao = 0;
         jogoComecou = false;
     }
     else {
         if (movRestantes == 0) { //Se não posso mais mover nenhuma esfera
             printf("\nSINTO MUITO... MAS VOCE NAO PODE MOVER MAIS NENHUMA PECA... =(\nVoce perdeu!\n\n");
-            inclinacao = 0;
             jogoComecou = false;
         }
     }
@@ -853,7 +851,8 @@ void DesenhaEsferas(){
 
     if (esf1) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 120, 30);
         Esfera(2);
@@ -862,7 +861,8 @@ void DesenhaEsferas(){
 
     if (esf2) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 120, 30);
         Esfera(2);
@@ -871,7 +871,8 @@ void DesenhaEsferas(){
 
     if (esf3) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 120, 30);
         Esfera(2);
@@ -880,7 +881,8 @@ void DesenhaEsferas(){
 
     if (esf4) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 80, 30);
         Esfera(2);
@@ -889,7 +891,8 @@ void DesenhaEsferas(){
 
     if (esf5) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 80, 30);
         Esfera(2);
@@ -898,7 +901,8 @@ void DesenhaEsferas(){
 
     if (esf6) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 80, 30);
         Esfera(2);
@@ -907,7 +911,8 @@ void DesenhaEsferas(){
 
     if (esf7) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-120, 40, 30);
         Esfera(2);
@@ -916,7 +921,8 @@ void DesenhaEsferas(){
 
     if (esf8) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-80, 40, 30);
         Esfera(2);
@@ -925,7 +931,8 @@ void DesenhaEsferas(){
 
     if (esf9) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 40, 30);
         Esfera(2);
@@ -934,7 +941,8 @@ void DesenhaEsferas(){
 
     if(esf10) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 40, 30);
         Esfera(2);
@@ -943,7 +951,8 @@ void DesenhaEsferas(){
 
     if (esf11) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 40, 30);
         Esfera(2);
@@ -952,7 +961,8 @@ void DesenhaEsferas(){
 
     if (esf12) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(80, 40, 30);
         Esfera(2);
@@ -961,7 +971,8 @@ void DesenhaEsferas(){
 
     if (esf13) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(120, 40, 30);
         Esfera(2);
@@ -970,7 +981,8 @@ void DesenhaEsferas(){
 
     if (esf14) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-120, 0, 30);
         Esfera(2);
@@ -979,7 +991,8 @@ void DesenhaEsferas(){
 
     if (esf15) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-80, 0, 30);
         Esfera(2);
@@ -988,7 +1001,8 @@ void DesenhaEsferas(){
 
     if (esf16) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, 0, 30);
         Esfera(2);
@@ -997,7 +1011,8 @@ void DesenhaEsferas(){
 
     if (esf17) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, 0, 30);
         Esfera(2);
@@ -1006,7 +1021,8 @@ void DesenhaEsferas(){
 
     if (esf18) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, 0, 30);
         Esfera(2);
@@ -1015,7 +1031,8 @@ void DesenhaEsferas(){
 
     if (esf19) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(80, 0, 30);
         Esfera(2);
@@ -1024,7 +1041,8 @@ void DesenhaEsferas(){
 
     if (esf20) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(120, 0, 30);
         Esfera(2);
@@ -1033,7 +1051,8 @@ void DesenhaEsferas(){
 
     if (esf21) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-120, -40, 30);
         Esfera(2);
@@ -1042,7 +1061,8 @@ void DesenhaEsferas(){
 
     if (esf22) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-80, -40, 30);
         Esfera(2);
@@ -1051,7 +1071,8 @@ void DesenhaEsferas(){
 
     if (esf23) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, -40, 30);
         Esfera(2);
@@ -1060,7 +1081,8 @@ void DesenhaEsferas(){
 
     if (esf24) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, -40, 30);
         Esfera(2);
@@ -1069,7 +1091,8 @@ void DesenhaEsferas(){
 
     if (esf25) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, -40, 30);
         Esfera(2);
@@ -1078,7 +1101,8 @@ void DesenhaEsferas(){
 
     if (esf26) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(80, -40, 30);
         Esfera(2);
@@ -1087,7 +1111,8 @@ void DesenhaEsferas(){
 
     if (esf27) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(120, -40, 30);
         Esfera(2);
@@ -1096,7 +1121,8 @@ void DesenhaEsferas(){
 
     if (esf28) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, -80, 30);
         Esfera(2);
@@ -1105,7 +1131,8 @@ void DesenhaEsferas(){
 
     if (esf29) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, -80, 30);
         Esfera(2);
@@ -1114,7 +1141,8 @@ void DesenhaEsferas(){
 
     if (esf30) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, -80, 30);
         Esfera(2);
@@ -1123,7 +1151,8 @@ void DesenhaEsferas(){
 
     if (esf31) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(-40, -120, 30);
         Esfera(2);
@@ -1132,7 +1161,8 @@ void DesenhaEsferas(){
 
     if (esf32) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(0, -120, 30);
         Esfera(2);
@@ -1141,7 +1171,8 @@ void DesenhaEsferas(){
 
     if (esf33) {
     glPushMatrix();
-        glRotated(inclinacao - 90, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX - 90, 1, 0, 0);
         glScaled(0.45, 0.45, 0.45);
         glTranslated(40, -120, 30);
         Esfera(2);
@@ -1159,7 +1190,8 @@ void Tabuleiro() {
     //BASE DO TABULEIRO
     glPushMatrix();
         glColor3f(0.4, 0, 0);
-        glRotated(inclinacao, 1, 0, 0);
+        glRotated(eixoY, 0, 1, 0);
+        glRotated(eixoX, 1, 0, 0);
         glTranslated(0, 3, -62.5);
         glScaled(125, 10, 125);
         Cubo();
@@ -1277,17 +1309,31 @@ void GerenciaTeclado(unsigned char key, int x, int y)
     if (!jogoComecou) { //Se o jogo ainda nao começou permite que o jogador gire o tabuleiro
 
         if (key == 'w') {
-            if (inclinacao == 90) {
-                inclinacao = 90;
+            if (eixoX == 180) {
+                eixoX = 180;
             } else {
-                inclinacao+= 5;
+                eixoX+= 5;
             }
         }
         if (key == 's') {
-            if (inclinacao == 0) {
-                inclinacao = 0;
+            if (eixoX == -30) {
+                eixoX = -30;
             } else {
-                inclinacao-= 5;
+                eixoX-= 5;
+            }
+        }
+        if (key == 'a') {
+            if (eixoY == -120) {
+                eixoY = -120;
+            } else {
+                eixoY-= 5;
+            }
+        }
+        if (key == 'd') {
+            if (eixoY == 120) {
+                eixoY = 120;
+            } else {
+                eixoY+= 5;
             }
         }
 
@@ -1304,7 +1350,7 @@ void MenuJogo(int op) {
 
         jogoComecou = true; //Altera o bool
 
-        inclinacao = 90; //Deixa o tabuleiro em pe
+        eixoX = 90; //Deixa o tabuleiro em pe
 
         EspecificaParametrosVisualizacao();
         glutPostRedisplay();
