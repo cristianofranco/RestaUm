@@ -350,9 +350,11 @@ int possoJogar(int i, int j){ ///CIMA=0, BAIX0=1, ESQ=2, DIR=3, NENHUM=-1
     //Verificar dir
     if (tabuleiro[i][j+1] == 1 && j+1 < 7) { //Tem vizinho na direita?
         if (tabuleiro[i][j+2] == 0 && j+2 < 7) { //Depois do vizinho, tem espaço livre?
-            return 3;
+            dir = true;
         }
     }
+
+    ///NESSA SITUAÇÃO, SE A VARIÁVEL estouVerificando FOR TRUE, SÓ SIMPLESMENTE DA UM VALOR DE RETORNO DIFERENTE DE -1
 
     if (quantMov == 2) {///CASO TENHA MAIS DE UMA DIREÇÃO
         if (cima == true && baixo == true && esq == false && dir == false && estouVerificando == true) {estouVerificando = false; return 0;};
