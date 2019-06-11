@@ -8,7 +8,7 @@
 GLint pecasRestantes;
 GLint movRestantes;
 
-GLfloat angle, fAspect, inclinacao = 0, escondeDefeito = -20;
+GLfloat angle, fAspect, inclinacao = 0;
 
 //Definição de cores RGBA para usar com MaterialFV
 GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
@@ -840,8 +840,6 @@ void Esfera(int i){
     gluQuadricTexture(esfera, GL_TRUE);
     gluQuadricNormals(esfera, GLU_SMOOTH);
 
-    glRotated(escondeDefeito, 1, 0, 0);
-
     gluSphere(esfera, 15, 50, 50);
 
 }
@@ -1283,7 +1281,6 @@ void GerenciaTeclado(unsigned char key, int x, int y)
                 inclinacao = 90;
             } else {
                 inclinacao+= 5;
-                escondeDefeito-= 4;
             }
         }
         if (key == 's') {
@@ -1291,7 +1288,6 @@ void GerenciaTeclado(unsigned char key, int x, int y)
                 inclinacao = 0;
             } else {
                 inclinacao-= 5;
-                escondeDefeito+= 4;
             }
         }
 

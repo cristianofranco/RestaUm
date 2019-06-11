@@ -276,7 +276,17 @@
 	<iostream>
 	"lodepng.h"
 
+1559771285 D
+
 1560257880 source:c:\users\cristiano franco\dropbox\computação gráfica\restaum\main.cpp
+	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1560130563 source:c:\users\cristiano franco\dropbox\computação gráfica\restaum\main.c
+
+1560130563 c68d32e00b0adb81d876a34c9779b2ce5baf8
 	<GL/glut.h>
 	<stdio.h>
 	<stdlib.h>
