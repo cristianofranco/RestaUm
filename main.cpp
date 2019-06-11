@@ -7,10 +7,7 @@
 
 GLint pecasRestantes;
 GLint movRestantes;
-<<<<<<< HEAD
-=======
 GLint quantMov;
->>>>>>> EscolherEntreDuasJogadas
 
 GLfloat angle, fAspect, eixoX = 0, eixoY = 0;
 
@@ -19,11 +16,7 @@ GLfloat Black[] = {0.0, 0.0, 0.0, 1.0};
 GLfloat DarkRed[] = {0.2, 0.0, 0.0, 1.0};
 GLfloat Red[] = {0.4, 0.0, 0.0, 1.0};
 GLfloat White[] = {1, 1, 1, 1.0};
-<<<<<<< HEAD
-GLfloat LightGray[] = {0.95, 0.95, 0.95, 0.90};
-=======
 GLfloat LightGray[] = {0.95, 0.95, 0.95, 0.85};
->>>>>>> EscolherEntreDuasJogadas
 GLfloat Gray[] = {0.65, 0.65, 0.65, 0.80};
 
 //TEXTURAS
@@ -44,10 +37,7 @@ int tabuleiro[7][7] = {{-1, -1, 1, 1, 1, -1, -1},
                        {-1,-1, 1, 1, 1, -1,-1}};
 
 bool jogoComecou = false;
-<<<<<<< HEAD
-=======
 bool estouVerificando = true;
->>>>>>> EscolherEntreDuasJogadas
 bool esf1 = true;
 bool esf2 = true;
 bool esf3 = true;
@@ -251,8 +241,6 @@ void atualizaTabuleiro() {
         esf33 = false;
     else
         esf33 = true;
-<<<<<<< HEAD
-=======
 
     glutPostRedisplay();
 }
@@ -308,7 +296,7 @@ void resetaMatriz() {
     tabuleiro[6][6] = -1;
 
     atualizaTabuleiro();
->>>>>>> EscolherEntreDuasJogadas
+
 }
 
 //Retorna a quantidade de peças que faltam para acabar o jogo
@@ -328,71 +316,44 @@ int quantasFaltam() {
 /*Verifica se é possível realizar uma jogada
 de acordo com o estado do tabuleiro, utilizando
 a posição i e j para verificar os vizinhos */
-<<<<<<< HEAD
-int possoJogar(int i, int j){
-=======
+
 int possoJogar(int i, int j){ ///CIMA=0, BAIX0=1, ESQ=2, DIR=3, NENHUM=-1
 
     char escolhaDir; //Escolha do usuário
 
     bool cima = false, baixo = false, esq = false, dir = false; //Se a direção for possível, a variável recebe 1
     quantMov = 0; //Conta as jogadas possíveis de uma determinada esfera
->>>>>>> EscolherEntreDuasJogadas
 
     //Verificar cima
     if (tabuleiro[i-1][j] == 1 && i-1 > 0) { //Tem vizinho em cima?
         if (tabuleiro[i-2][j] == 0 && i-2 > 0) { //Depois do vizinho, tem espaço livre?
-<<<<<<< HEAD
-            return 0;
-=======
             quantMov++;
             cima = true;
->>>>>>> EscolherEntreDuasJogadas
         }
     }
 
     //Verificar baixo
     if (tabuleiro[i+1][j] == 1 && i+1 < 7) { //Tem vizinho embaixo?
         if (tabuleiro[i+2][j] == 0 && i+2 < 7) { //Depois do vizinho, tem espaço livre?
-<<<<<<< HEAD
-            return 1;
-=======
             quantMov++;
             baixo = true;
->>>>>>> EscolherEntreDuasJogadas
         }
     }
 
     //Verificar esq
     if (tabuleiro[i][j-1] == 1 && j-1 > 0) { //Tem vizinho na esquerda?
         if (tabuleiro[i][j-2] == 0 && j-2 > 0) { //Depois do vizinho, tem espaço livre?
-<<<<<<< HEAD
-            return 2;
-=======
             quantMov++;
             esq = true;
->>>>>>> EscolherEntreDuasJogadas
         }
     }
 
     //Verificar dir
     if (tabuleiro[i][j+1] == 1 && j+1 < 7) { //Tem vizinho na direita?
         if (tabuleiro[i][j+2] == 0 && j+2 < 7) { //Depois do vizinho, tem espaço livre?
-<<<<<<< HEAD
             return 3;
         }
     }
-
-    return -1; //Se não achar condições de jogada, retorna -1.
-}
-
-int quantosMovimentos() {
-=======
-            quantMov++;
-            dir = true;
-        }
-    }
-
 
     if (quantMov == 2) {///CASO TENHA MAIS DE UMA DIREÇÃO
         if (cima == true && baixo == true && esq == false && dir == false && estouVerificando == true) {estouVerificando = false; return 0;};
@@ -474,8 +435,6 @@ int quantosMovimentos() {
 int quantosMovimentos() {
 
     estouVerificando = true;
-
->>>>>>> EscolherEntreDuasJogadas
     movRestantes = 0;
 
     for (int i=0;i<7;i++) {
@@ -486,11 +445,8 @@ int quantosMovimentos() {
         }
     }
 
-<<<<<<< HEAD
-=======
     estouVerificando = false;
 
->>>>>>> EscolherEntreDuasJogadas
     return movRestantes;
 }
 
@@ -501,24 +457,24 @@ void verificaFim() {
     quantosMovimentos(); //Verifica quantos movimentos estas peças ainda podem fazer
 
     if (pecasRestantes == 1) {
-<<<<<<< HEAD
+
         printf("PARABENS!!!! VOCE VENCEU!!! :D\n");
-=======
+
         system("cls");
         printf("-----------------------VOCE VENCEU!-----------------------\n\n");
         printf("Para iniciar uma nova partida, selecione a opcao 'Novo jogo' no menu novamente.");
->>>>>>> EscolherEntreDuasJogadas
+
         jogoComecou = false;
     }
     else {
         if (movRestantes == 0) { //Se não posso mais mover nenhuma esfera
-<<<<<<< HEAD
+
             printf("\nSINTO MUITO... MAS VOCE NAO PODE MOVER MAIS NENHUMA PECA... =(\nVoce perdeu!\n\n");
-=======
+
             system("cls");
             printf("-----------------------VOCE PERDEU!-----------------------\n\n");
             printf("Sinto muito! Voce nao pode mais mover pecas!\n\nPara iniciar uma nova partida, selecione a opcao 'Novo jogo' no menu novamente.");
->>>>>>> EscolherEntreDuasJogadas
+
             jogoComecou = false;
         }
     }
@@ -1435,8 +1391,8 @@ void ConfiguraIluminacao() {
     GLfloat luzEspecular[] = {1.0, 1.0, 1.0, 1.0};
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzDifusa);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzEspecular);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 
     //Posicionando a luz
     GLfloat posicaoLuz[] = {0, 200, 0, 1.0};
@@ -1446,13 +1402,10 @@ void ConfiguraIluminacao() {
 // Inicializa parâmetros de rendering
 void Inicializa (void)
 {
-<<<<<<< HEAD
-=======
     //Instruções de examinar tabuleiro
     printf("-----------------------BEM VINDO AO RESTA UM!-----------------------\n\n");
     printf("- Para acessar o menu, clique com o botao direito do mouse sobre a tela do jogo.\n- Para rotacionar o tabuleiro voce pode utilizar as teclas: \nW: Frente\nS: Tras\nA: Esquerda\nD: Direita");
 
->>>>>>> EscolherEntreDuasJogadas
     //Setup iluminação
     ConfiguraIluminacao();
 
@@ -1514,67 +1467,59 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 //Função callback para gerenciar eventos do teclado
 void GerenciaTeclado(unsigned char key, int x, int y)
 {
-    if (!jogoComecou) { //Se o jogo ainda nao começou permite que o jogador gire o tabuleiro
+        if (!jogoComecou) { //Se o jogo ainda nao começou permite que o jogador gire o tabuleiro
 
-        if (key == 'w') {
-<<<<<<< HEAD
-            if (eixoX == 180) {
-                eixoX = 180;
-            } else {
-                eixoX+= 5;
+            if (key == 'w') {
+                if (eixoX == 180) {
+                    eixoX = 180;
+                } else {
+                    eixoX+= 5;
+                }
             }
-        }
-        if (key == 's') {
-            if (eixoX == -30) {
-                eixoX = -30;
-            } else {
-                eixoX-= 5;
-=======
-            if (eixoX == -120) {
-                eixoX = -120;
-            } else {
-                eixoX-= 5;
+            if (key == 's') {
+                if (eixoX == -30) {
+                    eixoX = -30;
+                } else {
+                    eixoX-= 5;
+                if (eixoX == -120) {
+                    eixoX = -120;
+                } else {
+                    eixoX-= 5;
+                }
             }
-        }
-        if (key == 's') {
-            if (eixoX == 180) {
-                eixoX = 180;
-            } else {
-                eixoX+= 5;
->>>>>>> EscolherEntreDuasJogadas
+            if (key == 's') {
+                if (eixoX == 180) {
+                    eixoX = 180;
+                } else {
+                    eixoX+= 5;
+                }
             }
-        }
-        if (key == 'a') {
-            if (eixoY == -120) {
-                eixoY = -120;
-            } else {
-                eixoY-= 5;
+            if (key == 'a') {
+                if (eixoY == -120) {
+                    eixoY = -120;
+                } else {
+                    eixoY-= 5;
+                }
             }
-        }
-        if (key == 'd') {
-            if (eixoY == 120) {
-                eixoY = 120;
-            } else {
-                eixoY+= 5;
+            if (key == 'd') {
+                if (eixoY == 120) {
+                    eixoY = 120;
+                } else {
+                    eixoY+= 5;
+                }
             }
+
         }
 
+        EspecificaParametrosVisualizacao();
+        glutPostRedisplay();
     }
-
-    EspecificaParametrosVisualizacao();
-    glutPostRedisplay();
 }
 
 void MenuJogo(int op) {
     switch(op) {
     case 0:
-<<<<<<< HEAD
-        printf("Jogo iniciado!");
 
-        jogoComecou = true; //Altera o bool
-
-        eixoX = 90; //Deixa o tabuleiro em pe
-=======
         system("cls");
         printf("\n\nJogo iniciado!");
 
@@ -1585,7 +1530,6 @@ void MenuJogo(int op) {
 
         eixoX = 90;
         eixoY = 0; //Deixa o tabuleiro em pe
->>>>>>> EscolherEntreDuasJogadas
 
         EspecificaParametrosVisualizacao();
         glutPostRedisplay();
